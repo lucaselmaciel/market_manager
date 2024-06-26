@@ -9,5 +9,5 @@ class CustomerSchema(Schema):
     email = fields.Email(required=False)
 
     @post_load
-    def make_customer(self, data, **kwargs):
+    def make_customer(self, data, **_) -> Customer:
         return Customer(**data)
