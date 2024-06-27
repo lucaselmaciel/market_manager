@@ -1,16 +1,14 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
-db = SQLAlchemy()
+from app import db
 
 
 class Sale(db.Model):
     __tablename__ = 'sales'
 
     id = db.Column(db.Integer, primary_key=True)
-    sale_data = db.Column(db.DateTime, nullable=False, default=datetime.now(datetime.UTC))
+    sale_data = db.Column(db.DateTime, nullable=False, default=datetime.now())
     total_amount = db.Column(db.Float, nullable=False)
-    customer_id = db.Column(db.Integer, db.ForeignKey("costumer_id"), nullable=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
 
     sale_details = db.relationship("SaleDetail", backref="sale", lazy="dynamic")
 
