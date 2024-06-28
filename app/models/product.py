@@ -18,3 +18,12 @@ class Product(db.Model):
 
     def __repr__(self):
         return f'<Product {self.name}>'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'price': self.price,
+            'stock_quantity': self.stock_quantity,
+            'description': self.description or ""
+        }

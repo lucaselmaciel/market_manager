@@ -18,6 +18,16 @@ class Sale(db.Model):
 
     def __repr__(self) -> str:
         return f'<Sale {self.id} on {self.sale_date}>'
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'sale_date': self.sale_date.isoformat(),
+            'total_amount': self.total_amount,
+            'customer_id': self.customer_id,
+            'customer': self.customer.to_dict() if self.customer else None,
+            'sale_details': [detail.to_dict() for detail in self.sale_details]
+        }
 
 
 class SaleDetail(db.Model):

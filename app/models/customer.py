@@ -20,3 +20,12 @@ class Customer(db.Model):
 
     def __repr__(self) -> str:
         return f'<Customer {self.name}>'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'contact': self.contact,
+            'address': self.address,
+            'email': self.email or ""
+        }
