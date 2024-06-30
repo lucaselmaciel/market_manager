@@ -52,3 +52,8 @@ class CustomerRepository:
             db.session.commit()
             return True
         return False
+
+    @staticmethod
+    def get_customer_by_email(email: str) -> Optional[Customer]:
+        customer = Customer.query.filter(Customer.email == email).one_or_none()
+        return customer
