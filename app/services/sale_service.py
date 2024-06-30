@@ -1,6 +1,6 @@
 from app.repositories.sale_repository import SaleRepository
 from app.models.sale import Sale
-from typing import List
+from typing import Dict, List
 
 
 class SaleService:
@@ -13,8 +13,10 @@ class SaleService:
         return SaleRepository.get_sale_by_id(sale_id)
 
     @staticmethod
-    def create_sale(total_amount: float, customer_id: int = None) -> Sale:
-        new_sale = SaleRepository.add_sale(total_amount, customer_id)
+    def create_sale(
+        sale_details: Dict, total_amount: float, customer_id: int = None
+    ) -> Sale:
+        new_sale = SaleRepository.add_sale(sale_details, total_amount, customer_id)
         return new_sale
 
     @staticmethod
