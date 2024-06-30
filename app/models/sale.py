@@ -6,7 +6,7 @@ class Sale(db.Model):
     __tablename__ = 'sales'
 
     id = db.Column(db.Integer, primary_key=True)
-    sale_data = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    sale_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
     total_amount = db.Column(db.Float, nullable=False)
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
 
