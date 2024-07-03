@@ -12,10 +12,10 @@ class Sale(db.Model):
 
     sale_details = db.relationship("SaleDetail", backref="sale", lazy="dynamic")
 
-    def __init__(self, sale_details, total_amount, customer_id=None):
+    def __init__(self, total_amount, customer_id=None):
         self.total_amount = total_amount
         self.customer_id = customer_id
-        self.sale_details = sale_details
+        #self.sale_details = sale_details
 
     def __repr__(self) -> str:
         return f'<Sale {self.id} on {self.sale_date}>'

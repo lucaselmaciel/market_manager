@@ -1,5 +1,6 @@
+from app.models.product import Product
 from app.repositories.sale_repository import SaleRepository
-from app.models.sale import Sale
+from app.models.sale import Sale, SaleDetail
 from typing import Dict, List
 
 
@@ -16,7 +17,27 @@ class SaleService:
     def create_sale(
         sale_details: Dict, total_amount: float, customer_id: int = None
     ) -> Sale:
-        new_sale = SaleRepository.add_sale(sale_details, total_amount, customer_id)
+        calculated_total = sum(detail['quantity'] * detail['price_at_sale'] for detail in sale_details)
+
+        if not round(calculated_total, 2) == round(total_amount, 2):
+            raise ValueError("O total_amount não corresponde à soma dos detalhes dos produtos")
+
+        new_sale = Sale(total_amount=total_amount, customer_id=customer_id)
+        for detail in sale_details:
+            product = Product.query.get(detail['product_id'])
+            if not product:
+                raise ValueError(f"Produto com ID {detail['product_id']} não encontrado")
+            if detail['quantity'] > product.stock_quantity:
+                raise ValueError(f"Estoque insuficiente para o produto {product.name}")
+            new_detail = SaleDetail(
+                product_id=detail['product_id'],
+                quantity=detail['quantity'],
+                price_at_sale=detail['price_at_sale']
+            )
+            new_sale.sale_details.append(new_detail)
+            product.stock_quantity -= detail['quantity']
+
+        SaleRepository.add_sale(new_sale)
         return new_sale
 
     @staticmethod
