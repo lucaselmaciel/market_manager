@@ -20,15 +20,15 @@ class SaleService:
         calculated_total = sum(detail['quantity'] * detail['price_at_sale'] for detail in sale_details)
 
         if not round(calculated_total, 2) == round(total_amount, 2):
-            raise ValueError("O total_amount não corresponde à soma dos detalhes dos produtos")
+            raise ValueError("The total_amount is different from the sum of each product value.")
 
         new_sale = Sale(total_amount=total_amount, customer_id=customer_id)
         for detail in sale_details:
             product = Product.query.get(detail['product_id'])
             if not product:
-                raise ValueError(f"Produto com ID {detail['product_id']} não encontrado")
+                raise ValueError(f"Product with the ID {detail['product_id']} not found.")
             if detail['quantity'] > product.stock_quantity:
-                raise ValueError(f"Estoque insuficiente para o produto {product.name}")
+                raise ValueError(f"insufficient stock of {product.name}")
             new_detail = SaleDetail(
                 product_id=detail['product_id'],
                 quantity=detail['quantity'],
