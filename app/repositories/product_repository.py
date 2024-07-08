@@ -12,12 +12,13 @@ class ProductRepository:
         return Product.query.get(product_id)
 
     @staticmethod
-    def add_product(name, price, stock_quantity, description) -> Product:
+    def add_product(name, price, stock_quantity, description, barcode) -> Product:
         new_product = Product(
             name=name,
             price=price,
             stock_quantity=stock_quantity,
             description=description,
+            barcode=barcode
         )
         db.session.add(new_product)
         db.session.commit()
