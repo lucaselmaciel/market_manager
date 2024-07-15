@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.services.sale_service import SaleService
+from app.schemas import SaleSchema
 
 sale_bp = Blueprint("sale_bp", __name__)
 
@@ -23,7 +24,9 @@ def get_sale(sale_id):
 def create_sale():
     data = request.json
     try:
-        sale = SaleService.create_sale(**data)
+        schema = SaleSchema()
+        sale = schema.load(data)
+        sale = SaleService.create_sale(sale)
         return jsonify(sale.to_dict()), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 400
