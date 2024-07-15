@@ -1,0 +1,1 @@
+from app.schemas.sale_schemas import SaleSchema, SaleDetailSchema
