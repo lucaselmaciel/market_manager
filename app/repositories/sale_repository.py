@@ -9,7 +9,11 @@ class SaleRepository:
 
     @staticmethod
     def get_sale_by_id(sale_id: int) -> Optional[Sale]:
-        return Sale.query.get(sale_id)
+        sale = Sale.query.get(sale_id)
+        if sale:
+            return sale
+        else:
+            raise ValueError("Sale not found")
 
     @staticmethod
     def add_sale(
@@ -18,22 +22,6 @@ class SaleRepository:
         db.session.add(new_sale)
         db.session.commit()
         return new_sale
-
-    @staticmethod
-    def update_sale(
-        sale_id: int,
-        total_amount: Optional[float] = None,
-        customer_id: Optional[int] = None,
-    ) -> Optional[Sale]:
-        sale = Sale.query.get(sale_id)
-        if sale:
-            if total_amount is not None:
-                sale.total_amount = total_amount
-            if customer_id is not None:
-                sale.customer_id = customer_id
-            db.session.commit()
-            return sale
-        return None
 
     @staticmethod
     def delete_sale(sale_id: int) -> bool:

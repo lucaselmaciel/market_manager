@@ -32,19 +32,6 @@ def create_sale():
         return jsonify({"error": str(e)}), 400
 
 
-@sale_bp.route("/sale/<int:sale_id>", methods=["PUT"])
-def update_sale(sale_id):
-    data = request.json
-    try:
-        sale = SaleService.update_sale(sale_id, **data)
-        if sale:
-            return jsonify(sale.to_dict()), 200
-        else:
-            return jsonify({"error": "Sale not found"}), 404
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
-
-
 @sale_bp.route("/sale/<int:sale_id>", methods=["DELETE"])
 def delete_sale(sale_id):
     success = SaleService.delete_sale(sale_id)
