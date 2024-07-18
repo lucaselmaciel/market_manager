@@ -18,10 +18,14 @@ class SaleService:
     def create_sale(
         sale: Sale,
     ) -> Sale:
-        calculated_total = sum(detail.quantity * detail.price_at_sale for detail in sale.sale_details)
+        calculated_total = sum(
+            detail.quantity * detail.price_at_sale for detail in sale.sale_details
+        )
 
         if not round(calculated_total, 2) == round(sale.total_amount, 2):
-            raise ValueError("The total_amount is different from the sum of each product value.")
+            raise ValueError(
+                "The total_amount is different from the sum of each product value."
+            )
 
         new_sale = Sale(total_amount=sale.total_amount, customer_id=sale.customer_id)
         for detail in sale.sale_details:
@@ -33,7 +37,7 @@ class SaleService:
             new_detail = SaleDetail(
                 product_id=detail.product_id,
                 quantity=detail.quantity,
-                price_at_sale=detail.price_at_sale
+                price_at_sale=detail.price_at_sale,
             )
             new_sale.sale_details.append(new_detail)
             product.stock_quantity -= detail.quantity

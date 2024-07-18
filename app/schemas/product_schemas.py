@@ -9,5 +9,5 @@ class ProductSchema(Schema):
     description = fields.Str(required=False)
 
     @post_load
-    def make_product(self, data, **kwargs):
+    def make_product(self, data, **_):
         return Product(**data)

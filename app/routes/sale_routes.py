@@ -19,7 +19,7 @@ def get_all_sales():
 
 
 @sale_bp.route("/sale/<int:sale_id>", methods=["GET"])
-def get_sale(sale_id):
+def get_sale(sale_id: int):
     sale = SaleService.get_sale_by_id(sale_id)
     if sale:
         return jsonify(sale.to_dict()), 200
@@ -40,7 +40,7 @@ def create_sale():
 
 
 @sale_bp.route("/sale/<int:sale_id>", methods=["DELETE"])
-def delete_sale(sale_id):
+def delete_sale(sale_id: int):
     success = SaleService.delete_sale(sale_id)
     if success:
         return jsonify({"message": "Sale deleted"}), 200

@@ -2,7 +2,7 @@ from app import db
 
 
 class Product(db.Model):
-    __tablename__ = 'products'
+    __tablename__ = "products"
 
     id = db.Column(db.Integer, primary_key=True)
     barcode = db.Column(db.String(128), unique=True, nullable=False)
@@ -11,7 +11,14 @@ class Product(db.Model):
     stock_quantity = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(256))
 
-    def __init__(self, name, price, stock_quantity, barcode, description=None):
+    def __init__(
+        self,
+        name: str,
+        price: float,
+        stock_quantity: int,
+        barcode: str,
+        description: str = None,
+    ):
         self.name = name
         self.price = price
         self.stock_quantity = stock_quantity
@@ -19,14 +26,14 @@ class Product(db.Model):
         self.barcode = barcode
 
     def __repr__(self):
-        return f'<Product {self.name}>'
+        return f"<Product {self.name}>"
 
     def to_dict(self):
         return {
-            'id': self.id,
-            'name': self.name,
-            'price': self.price,
-            'stock_quantity': self.stock_quantity,
-            'description': self.description or "",
-            'barcode': self.barcode,
+            "id": self.id,
+            "name": self.name,
+            "price": self.price,
+            "stock_quantity": self.stock_quantity,
+            "description": self.description or "",
+            "barcode": self.barcode,
         }

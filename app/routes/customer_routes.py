@@ -11,7 +11,7 @@ def get_all_customers():
 
 
 @customer_bp.route("/customer/<int:customer_id>", methods=["GET"])
-def get_customer(customer_id):
+def get_customer(customer_id: int):
     customer = CustomerService.get_customer_by_id(customer_id)
     if customer:
         return jsonify(customer.to_dict()), 200
@@ -30,7 +30,7 @@ def create_customer():
 
 
 @customer_bp.route("/customer/<int:customer_id>", methods=["PUT"])
-def update_customer(customer_id):
+def update_customer(customer_id: int):
     data = request.json
     try:
         customer = CustomerService.update_customer(customer_id, **data)

@@ -11,7 +11,7 @@ def get_all_products():
 
 
 @product_bp.route("/product/<int:product_id>", methods=["GET"])
-def get_product(product_id):
+def get_product(product_id: int):
     product = ProductService.get_product_by_id(product_id)
     if product:
         return jsonify(product.to_dict()), 200
@@ -30,7 +30,7 @@ def create_product():
 
 
 @product_bp.route("/product/<int:product_id>", methods=["PUT"])
-def update_product(product_id):
+def update_product(product_id: int):
     data = request.json
     try:
         product = ProductService.update_product(product_id, **data)
