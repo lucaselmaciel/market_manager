@@ -1,13 +1,20 @@
 from flask import Blueprint, request, jsonify
+from marshmallow import ValidationError
 from app.services.sale_service import SaleService
-from app.schemas import SaleSchema
+from app.schemas import SaleSchema, SalesListFiltersSchema
 
 sale_bp = Blueprint("sale_bp", __name__)
 
 
-@sale_bp.route("/sales", methods=["GET"])
+@sale_bp.route("/sales", methods=["POST"])
 def get_all_sales():
-    sales = SaleService.get_all_sales()
+    try:
+        filters_schema = SalesListFiltersSchema()
+        filters = filters_schema.load(request.json)
+        sales = SaleService.get_sales(filters)
+    except ValidationError as e:
+        return jsonify(e.messages), 422
+
     return jsonify([sale.to_dict() for sale in sales]), 200
 
 

@@ -1,13 +1,14 @@
 from app.models.product import Product
 from app.repositories.sale_repository import SaleRepository
 from app.models.sale import Sale, SaleDetail
-from typing import Dict, List
+from typing import List
+from app.utils.typing import SalesFilters
 
 
 class SaleService:
     @staticmethod
-    def get_all_sales() -> List[Sale]:
-        return SaleRepository.get_all_sales()
+    def get_sales(filters: SalesFilters) -> List[Sale]:
+        return SaleRepository.get_sales(filters)
 
     @staticmethod
     def get_sale_by_id(sale_id: int) -> Sale:

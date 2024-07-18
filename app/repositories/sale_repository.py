@@ -1,11 +1,18 @@
-from typing import Dict, List, Optional
-from app.models.sale import Sale, SaleDetail, db
+from typing import List, Optional
+from app.models.sale import Sale, db
+from app.utils.typing import SalesFilters
 
 
 class SaleRepository:
     @staticmethod
-    def get_all_sales() -> List[Sale]:
-        return Sale.query.all()
+    def get_sales(filters: SalesFilters) -> List[Sale]:
+        return (
+            db.session.query(Sale)
+            .filter(
+                Sale.sale_date >= filters.start_date, Sale.sale_date <= filters.end_date
+            )
+            .all()
+        )
 
     @staticmethod
     def get_sale_by_id(sale_id: int) -> Optional[Sale]:

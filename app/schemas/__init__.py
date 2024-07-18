@@ -1,1 +1,1 @@
-from app.schemas.sale_schemas import SaleSchema, SaleDetailSchema
+from app.schemas.sale_schemas import SaleSchema, SaleDetailSchema, SalesListFiltersSchema
