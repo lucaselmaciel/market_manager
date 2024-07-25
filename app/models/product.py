@@ -17,8 +17,10 @@ class Product(db.Model):
         price: float,
         stock_quantity: int,
         barcode: str,
+        id: int = None,
         description: str = None,
     ):
+        self.id = id
         self.name = name
         self.price = price
         self.stock_quantity = stock_quantity

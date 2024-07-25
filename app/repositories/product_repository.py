@@ -1,5 +1,6 @@
 from typing import List, Optional
 from app.models.product import Product, db
+from werkzeug.exceptions import NotFound
 
 
 class ProductRepository:
@@ -9,7 +10,10 @@ class ProductRepository:
 
     @staticmethod
     def get_product_by_id(product_id) -> Product:
-        return Product.query.get(product_id)
+        product = Product.query.get(product_id)
+        if not product:
+            raise NotFound("Product not found")
+        return product
 
     @staticmethod
     def add_product(name, price, stock_quantity, description, barcode) -> Product:
@@ -26,21 +30,11 @@ class ProductRepository:
 
     @staticmethod
     def update_product(
-        product_id, name=None, price=None, stock_quantity=None, description=None
+        product: Product,
     ) -> Optional[Product]:
-        product = Product.query.get(product_id)
-        if product:
-            if name:
-                product.name = name
-            if price:
-                product.price = price
-            if stock_quantity is not None:
-                product.stock_quantity = stock_quantity
-            if description:
-                product.description = description
-            db.session.commit()
-            return product
-        return None
+        db.session.merge(product)
+        db.session.commit()
+        return product
 
     @staticmethod
     def delete_product(product_id) -> bool:

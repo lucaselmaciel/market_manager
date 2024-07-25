@@ -28,19 +28,14 @@ class ProductService:
     @staticmethod
     def update_product(
         product_id: int,
-        name: str = None,
-        price: float = None,
-        stock_quantity: int = None,
-        description: str = None,
+        product: Product
     ) -> Product:
-        product = ProductRepository.get_product_by_id(product_id)
-        if product:
+        db_product = ProductRepository.get_product_by_id(product_id)
+        if db_product:
             updated_product = ProductRepository.update_product(
-                product_id, name, price, stock_quantity, description
+                product
             )
             return updated_product
-        else:
-            raise ValueError("Product not found.")
 
     @staticmethod
     def delete_product(product_id: int) -> bool:

@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.product_service import ProductService
+from app.schemas import ProductSchema
+from werkzeug.exceptions import NotFound
 
 product_bp = Blueprint("product_bp", __name__)
 
@@ -32,14 +34,16 @@ def create_product():
 @product_bp.route("/product/<int:product_id>", methods=["PUT"])
 def update_product(product_id: int):
     data = request.json
+    data["id"] = product_id
+    schema = ProductSchema()
     try:
-        product = ProductService.update_product(product_id, **data)
-        if product:
-            return jsonify(product.to_dict()), 200
-        else:
-            return jsonify({"error": "Product not found"}), 404
+        product = schema.load(data)
+        product = ProductService.update_product(product_id, product)
+        return jsonify(product.to_dict()), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+    except NotFound as e:
+        return jsonify({"error": str(e)}), 404
 
 
 @product_bp.route("/product/<int:product_id>", methods=["DELETE"])
