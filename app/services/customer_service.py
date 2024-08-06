@@ -1,6 +1,7 @@
 from typing import List
 from app.repositories.customer_repository import CustomerRepository
 from app.models.customer import Customer
+from werkzeug.exceptions import NotFound
 
 
 class CustomerService:
@@ -24,18 +25,13 @@ class CustomerService:
     @staticmethod
     def update_customer(
         customer_id: int,
-        name: str = None,
-        contact: str = None,
-        address: str = None,
-        email: str = None,
+        customer: Customer
     ) -> Customer:
         customer = CustomerRepository.get_customer_by_id(customer_id)
         if customer:
-            return CustomerRepository.update_customer(
-                customer_id, name, contact, address, email
-            )
+            return CustomerRepository.update_customer(customer)
         else:
-            raise ValueError("Customer not found.")
+            raise NotFound("Customer not found.")
 
     @staticmethod
     def delete_customer(customer_id: int) -> bool:

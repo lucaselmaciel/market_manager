@@ -24,25 +24,11 @@ class CustomerRepository:
 
     @staticmethod
     def update_customer(
-        customer_id: int,
-        name: Optional[str] = None,
-        contact: Optional[str] = None,
-        address: Optional[str] = None,
-        email: Optional[str] = None,
+        customer: Customer
     ) -> Optional[Customer]:
-        customer = Customer.query.get(customer_id)
-        if customer:
-            if name:
-                customer.name = name
-            if contact:
-                customer.contact = contact
-            if address:
-                customer.address = address
-            if email:
-                customer.email = email
-            db.session.commit()
-            return customer
-        return None
+        db.session.merge(customer)
+        db.session.commit()
+        return customer
 
     @staticmethod
     def delete_customer(customer_id: int) -> bool:

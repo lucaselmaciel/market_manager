@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.services.customer_service import CustomerService
+from app.schemas import CustomerSchema
 
 customer_bp = Blueprint("customer_bp", __name__)
 
@@ -32,9 +33,11 @@ def create_customer():
 @customer_bp.route("/customer/<int:customer_id>", methods=["PUT"])
 def update_customer(customer_id: int):
     data = request.json
+    schema = CustomerSchema()
     try:
-        customer = CustomerService.update_customer(customer_id, **data)
-        if customer:
+        customer = schema.load(data)
+        persisted_customer = CustomerService.update_customer(customer_id, customer)
+        if persisted_customer:
             return jsonify(customer.to_dict()), 200
         else:
             return jsonify({"error": "Customer not found"}), 404
