@@ -23,10 +23,7 @@ class CustomerService:
             raise ValueError("A customer with the given email already exists.")
 
     @staticmethod
-    def update_customer(
-        customer_id: int,
-        customer: Customer
-    ) -> Customer:
+    def update_customer(customer_id: int, customer: Customer) -> Customer:
         customer = CustomerRepository.get_customer_by_id(customer_id)
         if customer:
             return CustomerRepository.update_customer(customer)

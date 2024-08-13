@@ -1,6 +1,7 @@
 from marshmallow import Schema, fields, post_load
 from app.models.product import Product
 
+
 class ProductSchema(Schema):
     id = fields.Int()
     name = fields.Str(required=True)

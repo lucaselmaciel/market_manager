@@ -22,7 +22,7 @@ class ProductRepository:
             price=price,
             stock_quantity=stock_quantity,
             description=description,
-            barcode=barcode
+            barcode=barcode,
         )
         db.session.add(new_product)
         db.session.commit()

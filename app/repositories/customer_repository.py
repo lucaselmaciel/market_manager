@@ -23,9 +23,7 @@ class CustomerRepository:
         return new_customer
 
     @staticmethod
-    def update_customer(
-        customer: Customer
-    ) -> Optional[Customer]:
+    def update_customer(customer: Customer) -> Optional[Customer]:
         db.session.merge(customer)
         db.session.commit()
         return customer

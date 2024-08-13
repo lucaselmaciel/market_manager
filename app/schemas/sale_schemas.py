@@ -1,7 +1,6 @@
 from marshmallow import Schema, ValidationError, fields, post_load, validates_schema
 from app.models.sale import Sale, SaleDetail
 from datetime import date
-
 from app.utils.typing import SalesFilters
 
 

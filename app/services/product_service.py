@@ -26,15 +26,10 @@ class ProductService:
         return new_product
 
     @staticmethod
-    def update_product(
-        product_id: int,
-        product: Product
-    ) -> Product:
+    def update_product(product_id: int, product: Product) -> Product:
         db_product = ProductRepository.get_product_by_id(product_id)
         if db_product:
-            updated_product = ProductRepository.update_product(
-                product
-            )
+            updated_product = ProductRepository.update_product(product)
             return updated_product
 
     @staticmethod
