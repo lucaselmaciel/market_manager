@@ -25,7 +25,9 @@ def get_product(product_id: int):
 def create_product():
     data = request.json
     try:
-        product = ProductService.create_product(**data)
+        schema = ProductSchema()
+        product = schema.load(data)
+        persisted_product = ProductService.create_product(product)
         return jsonify(product.to_dict()), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
