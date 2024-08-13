@@ -16,9 +16,7 @@ class ProductService:
     def create_product(
         product: Product,
     ) -> Product:
-        new_product = ProductRepository.add_product(
-            product
-        )
+        new_product = ProductRepository.add_product(product)
         return new_product
 
     @staticmethod
