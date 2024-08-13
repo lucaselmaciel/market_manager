@@ -14,14 +14,10 @@ class ProductService:
 
     @staticmethod
     def create_product(
-        name: str,
-        price: float,
-        stock_quantity: int,
-        description: str = None,
-        barcode: str = None,
+        product: Product,
     ) -> Product:
         new_product = ProductRepository.add_product(
-            name, price, stock_quantity, description, barcode
+            product
         )
         return new_product
 
