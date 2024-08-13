@@ -16,14 +16,7 @@ class ProductRepository:
         return product
 
     @staticmethod
-    def add_product(name, price, stock_quantity, description, barcode) -> Product:
-        new_product = Product(
-            name=name,
-            price=price,
-            stock_quantity=stock_quantity,
-            description=description,
-            barcode=barcode,
-        )
+    def add_product(new_product: Product) -> Product:
         db.session.add(new_product)
         db.session.commit()
         return new_product
